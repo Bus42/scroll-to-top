@@ -11,6 +11,8 @@ import {
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 import { Logo } from './Logo';
+import Boxes from './components/Boxes';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
@@ -35,6 +37,8 @@ function App() {
           </VStack>
         </Grid>
       </Box>
+      <Boxes />
+      <ScrollToTop />
     </ChakraProvider>
   );
 }
