@@ -49,7 +49,7 @@ useEffect(() => {
 }, []);
 ```
 
-Go down to our return statement and we’ll start with a Flex box. We’ll give it a flexFlow (shorthand for flex direction and flex wrap) of row wrap, a gap of `{4}`, which Chakra will translate to a relative size and justify content of center.
+Go down to our return statement and we’ll start with a Flex box. We’ll give it a `flexFlow` (shorthand for `flexDirection` and `flexWrap`) of `row wrap`, a `gap` of `{4}`, which Chakra will translate to a relative size and `justifyContent` of `center`.
 ```
 <Flex flexFlow="row wrap" gap={4} justifyContent="center"></Flex>
 ```
