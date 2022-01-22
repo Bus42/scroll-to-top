@@ -34,11 +34,11 @@ const [boxes, setBoxes] = useState([]);
 Then we’ll create a function and call it makeBoxes with a single parameter for how many boxes we want. We’ll use an accumulator array and a for loop to push boxes into our array.
 ```
 const makeBoxes = howMany => {
-  let tempArr = [];
+  let boxes = [];
   for (let i = 0; i < howMany; i++) {
-    tempArr.push('box' + i);
+    boxes.push('box' + i);
   }
-  return tempArr;
+  return boxes;
 };
 ```
 
