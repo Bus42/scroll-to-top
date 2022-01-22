@@ -1,68 +1,196 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Scroll To Top Tutorial
 
-## Available Scripts
+## Intro
+Hello fellow React enthusiasts! I’m Greg with Studio42 Web Development. If you’re watching this video, chances are you’ve at least used React and Green Sock Animation Project, which I will refer to as GSAP. This tutorial requires very basic knowledge of JavaScript, NPM, CSS, React and React component libraries.
 
-In the project directory, you can run:
+For those of you not familiar with Chakra UI, it is a fantastic component library that is growing quickly in popularity in the Front End community. Chakra makes it easy to incorporate accessibility and keyboard navigation into your applications. They have great documentation and some really great guides to help get you started with your next Front End project.
 
-### `npm start`
+Today, I’m going to show you how to create a component that will fade in when the user scrolls down, scroll smoothly to the top when activated, and fade away when you don’t need it.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+I have a link to the GitHub repository with two branches, starter and tldr. If you didn’t figure it out already, tldr is the branch with the completed code. Feel free to use it in your next application with Chakra UI and GSAP. The starter branch has the application and files created for you, but for the sake of those who are not GitHub users, I’ll start from scratch, in the terminal.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Terminal
 
-### `npm test`
+We’ll get started by running `npx create-react-app scroll-to-top --template @chakra-ui` 
+This will create a new React application with the Chakra UI template baked in.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Next, we’ll install necessary dependencies with  `npm i`
 
-### `npm run build`
+Then, we’ll install the Green Sock Animation Project Node package with `npm i gsap`  
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+And, for later, we’ll install Chakra icons with `npm i @chakra-ui/icons`
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+Now, we launch our IDE, then start our application with  `npm start`  
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Notice that at the top right there is an icon to switch between light and dark modes. Pretty cool, but not the focus of today’s tutorial. I’ll go ahead and switch it because it looks pretty cool.
 
-### `npm run eject`
+Not much use adding a scroll button to a page without enough content to scroll, so we’re going to add some dummy content.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Making Boxes
+For this, we’ll create a slice of state called boxes and initialize it as an empty array
+```
+const [boxes, setBoxes] = useState([]);
+```
+Then we’ll create a function and call it makeBoxes with a single parameter for how many boxes we want. We’ll use an accumulator array and a for loop to push boxes into our array.
+```
+const makeBoxes = howMany => {
+  let tempArr = [];
+  for (let i = 0; i < howMany; i++) {
+    tempArr.push('box' + i);
+  }
+  return tempArr;
+};
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Now, we use the `useEffect` hook to set our boxes into application state.
+```
+useEffect(() => {
+  setBoxes(makeBoxes(100));
+}, []);
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Go down to our return statement and we’ll start with a Flex box. We’ll give it a flexFlow (shorthand for flex direction and flex wrap) of row wrap, a gap of `{4}`, which Chakra will translate to a relative size and justify content of center.
+```
+<Flex flexFlow="row wrap" gap={4} justifyContent="center"></Flex>
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+We want to make sure there are boxes before trying to render them so I’ll put in a simple check to make sure the boxes array in state is “truthy”.
 
-## Learn More
+Now, we’ll map over the boxes array and return a Box for each one with a key, padding set to 80 pixels, and a gradient background, just for the heck of it. Let’s go ahead and give our boxes a nice round border. Some happy little boxes with happy little borders.
+```
+{boxes &&
+  boxes.map(box => {
+    return (
+      <Box
+        key={box}
+        p="80px"
+        bgImage="linear-gradient(red, orange)"
+        borderRadius="lg"
+      />
+    );
+  })}
+```
+## Creating The Button
+Now, for the main event: the scroll to top button
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+In your components directory, create a new file called ScrollToTop.jsx
+We’ll need a few imports to start with:
++ React, useEffect, and useRef from React
++ IconButton from @chakra-ui/react
++ ArrowUpIcon from @chakra-ui/icons that we installed earlier
++ gsap from gsap
+```
+import React, { useEffect, useRef } from 'react';
+import { IconButton } from '@chakra-ui/react';
+import { ArrowUpIcon } from '@chakra-ui/icons';
+import { gsap } from 'gsap';
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+We create our functional component.
+We'll just return a fragment for now
+```
+const ScrollToTop = () => {
+  return (<></>)
+};
 
-### Code Splitting
+export default ScrollToTop;
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+## State
+Let’s set up the state we’ll need using the `useState` hook
+```
+const [isVisible, setIsVisible] = React.useState(false);
+```
+and we’ll store a reference to this one with `useRef` and we'll call that one Ryan Reynolds, no, scrollButton. It's always good practice to use declarative names for variables.
+```
+const scrollButton = useRef();
+```
+Now that we’ve got our state, let’s write the functions that we’ll need to make the magic happen
 
-### Analyzing the Bundle Size
+## What’s Your Function?
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+first is our handleScroll function, which will check the window location on scroll.
+```
+const handleScroll = () => {
+  if (window.scrollY > 100) {
+    setIsVisible(true);
+  } else {
+    setIsVisible(false);
+  }
+};
+```
 
-### Making a Progressive Web App
+Now our handleClick function:
+```
+const handleClick = () => {
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: 'smooth',
+  });
+  scrollButton.current.blur();
+};
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+We’ll tell it to move focus away from the button after it’s clicked so you don’t get that annoying browser highlighting hanging around next time it shows.
 
-### Advanced Configuration
+While gsap does have a function for this, I found it easier just to use the standard window API. It’s generally best to use the standard web APIs if you don’t need the extra weight of a library function.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
 
-### Deployment
+On to our useEffect calls:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+## useEffect in Effect
 
-### `npm run build` fails to minify
+Let’s write our first `useEffect` call where we will add an event listener to the document window to listen for the scroll event. This will fire our handleScroll function when the browser detects a scroll event.
+```
+useEffect(() => {
+  window.addEventListener('scroll', handleScroll);
+  return () => window.removeEventListener('scroll', handleScroll);
+}, []);
+```
+Don’t forget to remove the event listener in the return block. Not that we need it here, but in any other application you want to do a little cleanup before you unmount the component. And make sure to add that empty dependency array at the end so it doesn’t run on every render, just the first one.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Our second call will listen for a change in the isVisible slice of state and animate our component based on that state.
+```
+useEffect(() => {
+  if (isVisible) {
+  gsap.to(scrollButton.current, {
+    duration: 0.5,
+    opacity: 1,
+    zIndex: 100,
+  });
+} else {
+  gsap.to(scrollButton.current, {
+    duration: 0.5,
+    opacity: 0,
+    zIndex: -1,
+  });
+}
+}, [isVisible]);
+```
+
+Now that we have the logic in place, let’s replace our fragment
+
+## Iconic
+
+Now, we’ll replace that fragment with an IconButton from Chakra UI and give it the following attributes:
+```
+<IconButton
+  aria-label="scroll to top"
+  icon={<ArrowUpIcon />}
+  size="lg"
+  colorScheme="purple"
+  variant="outline"
+  border="2px solid"
+  ref={scrollButton}
+  onClick={handleClick}
+  position="fixed"
+  bottom="4rem"
+  right="4rem"
+  zIndex="-1"
+  opacity="0"
+/>
+```
+## Don’t for get to wrap it up
+
+And there we go, a scroll to top button that plays nice and works in any component. Thanks so much for checking out my tutorial. The Github link for the code is in the comments, as well as links to Chakra UI and GSAP – two great libraries that make life easier.
