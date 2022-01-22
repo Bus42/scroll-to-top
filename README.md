@@ -317,7 +317,7 @@ const ScrollToTop = () => {
 
 export default ScrollToTop;
 ```
-## Don’t for get to wrap it up
+## Don’t forget to wrap it up!
 
 Finally, we'll import our components into our application in `App.js`
 ```
