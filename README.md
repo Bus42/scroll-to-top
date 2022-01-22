@@ -27,7 +27,23 @@ Notice that at the top right there is an icon to switch between light and dark m
 Not much use adding a scroll button to a page without enough content to scroll, so we’re going to add some dummy content.
 
 ## Making Boxes
-For this, we’ll create a slice of state called boxes and initialize it as an empty array
+In the /src directory, create a folder named components.
+In your components directory, create a new file called Boxes.jsx
+We’ll need a few imports to start with:
++ React, useEffect, and useState from React
++ Flex and Box from @chakra-ui/react
+```import React, { useEffect, useState } from 'react';
+import { Flex, Box } from '@chakra-ui/react';
+```
+Create our functional component and just return a fragment for now:
+```
+const Boxes = () => {
+  return (<></>)
+}
+export default Boxes;
+```
+
+In our Boxes function, we’ll create a slice of state called boxes and initialize it as an empty array
 ```
 const [boxes, setBoxes] = useState([]);
 ```
@@ -49,7 +65,7 @@ useEffect(() => {
 }, []);
 ```
 
-Go down to our return statement and we’ll start with a Flex box. We’ll give it a `flexFlow` (shorthand for `flexDirection` and `flexWrap`) of `row wrap`, a `gap` of `{4}`, which Chakra will translate to a relative size and `justifyContent` of `center`.
+Go down to our return statement and we’ll replace our fragment with a Flex box. We’ll give it a `flexFlow` (shorthand for `flexDirection` and `flexWrap`) of `row wrap`, a `gap` of `{4}`, which Chakra will translate to a relative size and `justifyContent` of `center`.
 ```
 <Flex flexFlow="row wrap" gap={4} justifyContent="center"></Flex>
 ```
@@ -70,11 +86,51 @@ Now, we’ll map over the boxes array and return a Box for each one with a key, 
     );
   })}
 ```
+
+### `Boxes.jsx` should look like this now:
+```
+import React, { useEffect, useState } from 'react';
+import { Flex, Box } from '@chakra-ui/react';
+
+const Boxes = () => {
+  const [boxes, setBoxes] = useState([]);
+
+  const makeBoxes = howMany => {
+    let tempArr = [];
+    for (let i = 0; i < howMany; i++) {
+      tempArr.push('box' + i);
+    }
+    return tempArr;
+  };
+
+  useEffect(() => {
+    setBoxes(makeBoxes(100));
+  }, []);
+
+  return (
+    <Flex flexFlow="row wrap" gap={4} justifyContent="center">
+      {boxes &&
+        boxes.map(box => {
+          return (
+            <Box
+              key={box}
+              p="80px"
+              bgImage="linear-gradient(red, orange)"
+              borderRadius="lg"
+            />
+          );
+        })}
+    </Flex>
+  );
+};
+
+export default Boxes;
+```
 ## Creating The Button
-Now, for the main event: the scroll to top button
+Now, for the main event: the scroll to top button. This component is completely reusable and depends on GSAP, the Chakra component library, and Chakra icons.
 
 In your components directory, create a new file called ScrollToTop.jsx
-We’ll need a few imports to start with:
+Import the modules we need:
 + React, useEffect, and useRef from React
 + IconButton from @chakra-ui/react
 + ArrowUpIcon from @chakra-ui/icons that we installed earlier
@@ -190,6 +246,76 @@ Now, we’ll replace that fragment with an IconButton from Chakra UI and give it
   zIndex="-1"
   opacity="0"
 />
+```
+### `ScrollToTop.jsx` should look like this now:
+```
+import React, { useEffect, useRef } from 'react';
+import { IconButton } from '@chakra-ui/react';
+import { ArrowUpIcon } from '@chakra-ui/icons';
+import { gsap } from 'gsap';
+
+const ScrollToTop = () => {
+  const [isVisible, setIsVisible] = React.useState(false);
+  const scrollButton = useRef();
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    if (isVisible) {
+      gsap.to(scrollButton.current, {
+        duration: 0.5,
+        opacity: 1,
+        zIndex: 100,
+      });
+    } else {
+      gsap.to(scrollButton.current, {
+        duration: 0.5,
+        opacity: 0,
+        zIndex: -1,
+      });
+    }
+  }, [isVisible]);
+
+  const handleScroll = () => {
+    if (window.scrollY > 100) {
+      setIsVisible(true);
+    } else {
+      setIsVisible(false);
+    }
+  };
+
+  const handleClick = () => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+    scrollButton.current.blur();
+  };
+
+  return (
+    <IconButton
+      aria-label="scroll to top"
+      icon={<ArrowUpIcon />}
+      size="lg"
+      colorScheme="purple"
+      variant="outline"
+      border="2px solid"
+      ref={scrollButton}
+      onClick={handleClick}
+      position="fixed"
+      bottom="4rem"
+      right="4rem"
+      zIndex="-1"
+      opacity="0"
+    />
+  );
+};
+
+export default ScrollToTop;
 ```
 ## Don’t for get to wrap it up
 
