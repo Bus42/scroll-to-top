@@ -319,4 +319,71 @@ export default ScrollToTop;
 ```
 ## Don’t for get to wrap it up
 
+Finally, we'll import our components into our application in `App.js`
+```
+import Boxes from './components/Boxes';
+import ScrollToTop from './components/ScrollToTop';
+```
+Then we'll place them below the Box in the return statement
+```
+  return (
+    <ChakraProvider theme={theme}>
+      <Box textAlign="center" fontSize="xl">
+        ...
+      </Box>
+      <Boxes />
+      <ScrollToTop />
+    </ChakraProvider>
+  );
+```
+App.js should look like this now:
+```
+import React from 'react';
+import {
+  ChakraProvider,
+  Box,
+  Text,
+  Link,
+  VStack,
+  Code,
+  Grid,
+  theme,
+} from '@chakra-ui/react';
+import { ColorModeSwitcher } from './ColorModeSwitcher';
+import { Logo } from './Logo';
+import Boxes from './components/Boxes';
+import ScrollToTop from './components/ScrollToTop';
+
+function App() {
+  return (
+    <ChakraProvider theme={theme}>
+      <Box textAlign="center" fontSize="xl">
+        <Grid minH="100vh" p={3}>
+          <ColorModeSwitcher justifySelf="flex-end" />
+          <VStack spacing={8}>
+            <Logo h="40vmin" pointerEvents="none" />
+            <Text>
+              Edit <Code fontSize="xl">src/App.js</Code> and save to reload.
+            </Text>
+            <Link
+              color="teal.500"
+              href="https://chakra-ui.com"
+              fontSize="2xl"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Learn Chakra
+            </Link>
+          </VStack>
+        </Grid>
+      </Box>
+      <Boxes />
+      <ScrollToTop />
+    </ChakraProvider>
+  );
+}
+
+export default App;
+```
+## Ding! Fries are done!
 And there we go, a scroll to top button that plays nice and works in any component. Thanks so much for checking out my tutorial. The Github link for the code is in the comments, as well as links to Chakra UI and GSAP – two great libraries that make life easier.
