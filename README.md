@@ -34,11 +34,11 @@ const [boxes, setBoxes] = useState([]);
 Then we’ll create a function and call it makeBoxes with a single parameter for how many boxes we want. We’ll use an accumulator array and a for loop to push boxes into our array.
 ```
 const makeBoxes = howMany => {
-  let tempArr = [];
+  let boxes = [];
   for (let i = 0; i < howMany; i++) {
-    tempArr.push('box' + i);
+    boxes.push('box' + i);
   }
-  return tempArr;
+  return boxes;
 };
 ```
 
@@ -49,7 +49,7 @@ useEffect(() => {
 }, []);
 ```
 
-Go down to our return statement and we’ll start with a Flex box. We’ll give it a flexFlow (shorthand for flex direction and flex wrap) of row wrap, a gap of `{4}`, which Chakra will translate to a relative size and justify content of center.
+Go down to our return statement and we’ll start with a Flex box. We’ll give it a `flexFlow` (shorthand for `flexDirection` and `flexWrap`) of `row wrap`, a `gap` of `{4}`, which Chakra will translate to a relative size and `justifyContent` of `center`.
 ```
 <Flex flexFlow="row wrap" gap={4} justifyContent="center"></Flex>
 ```
@@ -97,11 +97,11 @@ export default ScrollToTop;
 ```
 
 ## State
-Let’s set up the state we’ll need using the `useState` hook
+Inside our functional component, Let’s set up the state we’ll need using the `useState` hook
 ```
 const [isVisible, setIsVisible] = React.useState(false);
 ```
-and we’ll store a reference to this one with `useRef` and we'll call that one Ryan Reynolds, no, scrollButton. It's always good practice to use declarative names for variables.
+We’ll store a reference to this one with `useRef` and we'll call that one Ryan Reynolds, no, scrollButton. It's always good practice to use declarative names for variables.
 ```
 const scrollButton = useRef();
 ```
@@ -109,7 +109,7 @@ Now that we’ve got our state, let’s write the functions that we’ll need to
 
 ## What’s Your Function?
 
-first is our handleScroll function, which will check the window location on scroll.
+First is our handleScroll function, which will check the window location on scroll.
 ```
 const handleScroll = () => {
   if (window.scrollY > 100) {
