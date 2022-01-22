@@ -97,11 +97,11 @@ export default ScrollToTop;
 ```
 
 ## State
-Let’s set up the state we’ll need using the `useState` hook
+Inside our functional component, Let’s set up the state we’ll need using the `useState` hook
 ```
 const [isVisible, setIsVisible] = React.useState(false);
 ```
-and we’ll store a reference to this one with `useRef` and we'll call that one Ryan Reynolds, no, scrollButton. It's always good practice to use declarative names for variables.
+We’ll store a reference to this one with `useRef` and we'll call that one Ryan Reynolds, no, scrollButton. It's always good practice to use declarative names for variables.
 ```
 const scrollButton = useRef();
 ```
@@ -109,7 +109,7 @@ Now that we’ve got our state, let’s write the functions that we’ll need to
 
 ## What’s Your Function?
 
-first is our handleScroll function, which will check the window location on scroll.
+First is our handleScroll function, which will check the window location on scroll.
 ```
 const handleScroll = () => {
   if (window.scrollY > 100) {
