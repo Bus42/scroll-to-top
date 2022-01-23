@@ -5,7 +5,7 @@ Hello fellow React enthusiasts! I’m Greg with Studio42 Web Development. If you
 
 For those of you not familiar with Chakra UI, it is a fantastic component library that is growing quickly in popularity in the Front End community. Chakra makes it easy to incorporate accessibility and keyboard navigation into your applications. They have great documentation and some really great guides to help get you started with your next Front End project.
 
-Today, I’m going to show you how to create a component that will fade in when the user scrolls down, scroll smoothly to the top when activated, and fade away when you don’t need it.
+Today, I’m going to show you how to create a scroll to top button that will fade in when the user scrolls down, and when the user clicks the button, the page will scroll smoothly to the top, and fade the button out.
 
 I have a link to the GitHub repository with two branches, starter and tldr. If you didn’t figure it out already, tldr is the branch with the completed code. Feel free to use it in your next application with Chakra UI and GSAP. The starter branch has the application and files created for you, but for the sake of those who are not GitHub users, I’ll start from scratch, in the terminal.
 
