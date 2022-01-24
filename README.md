@@ -3,7 +3,7 @@
 ## Intro
 Hello fellow React enthusiasts! I’m Greg with Studio42 Web Development. If you’re watching this video, chances are you’ve at least used React and Green Sock Animation Project, which I will refer to as GSAP. This tutorial requires very basic knowledge of JavaScript, NPM, CSS, React and React component libraries.
 
-For those of you not familiar with Chakra UI, it is a fantastic component library that is growing quickly in popularity in the Front End community. Chakra makes it easy to incorporate accessibility and keyboard navigation into your applications. They have great documentation and some really great guides to help get you started with your next Front End project.
+If you haven't, I strongly suggest that you check them out as they are two libraries that are growing quickly in popularity in the Front End community and for good reason. Chakra UI is a component library that handles style with the provider pattern and makes it easy to incorporate accessibility and keyboard navigation into your applications. GSAP is an animation library that is easy to use and gives you incredible control over your animations. They have great documentation and some really great guides to help get you started with your next Front End project.
 
 Today, I’m going to show you how to create a scroll to top button that will fade in when the user scrolls down, and when the user clicks the button, the page will scroll smoothly to the top, and fade the button out.
 
