@@ -3,28 +3,34 @@
 ## Intro
 Hello fellow React enthusiasts! I’m Greg with Studio42 Web Development. If you’re watching this video, chances are you’ve at least used React and Green Sock Animation Project, which I will refer to as GSAP. This tutorial requires very basic knowledge of JavaScript, NPM, CSS, React and React component libraries.
 
-If you haven't, I strongly suggest that you check them out as they are two libraries that are growing quickly in popularity in the Front End community and for good reason. Chakra UI is a component library that handles style with the provider pattern and makes it easy to incorporate accessibility and keyboard navigation into your applications. GSAP is an animation library that is easy to use and gives you incredible control over your animations. They have great documentation and some really great guides to help get you started with your next Front End project.
-
 Today, I’m going to show you how to create a scroll to top button that will fade in when the user scrolls down, and when the user clicks the button, the page will scroll smoothly to the top, and fade the button out.
 
 I have a link to the GitHub repository with two branches, starter and tldr. If you didn’t figure it out already, tldr is the branch with the completed code. Feel free to use it in your next application with Chakra UI and GSAP. The starter branch has the application and files created for you, but for the sake of those who are not GitHub users, I’ll start from scratch, in the terminal.
 
 ## Terminal
 
-We’ll get started by running `npx create-react-app scroll-to-top --template @chakra-ui` 
+We’ll get started by running 
+```
+npx create-react-app scroll-to-top --template @chakra-ui
+```
 This will create a new React application with the Chakra UI template baked in.
 
-Next, we’ll install necessary dependencies with  `npm i`
+Now, cd into our application folder and install necessary dependencies with  `npm i`
 
-Then, we’ll install the Green Sock Animation Project Node package with `npm i gsap`  
+If you haven't, I strongly suggest that you check them out as they are two libraries that are growing quickly in popularity in the Front End community and for good reason. Chakra UI is a component library that handles style with the provider pattern and makes it easy to incorporate accessibility and keyboard navigation into your applications. GSAP is an animation library that is easy to use and gives you incredible control over your animations. They have great documentation and some really great guides to help get you started with your next Front End project.
 
-And, for later, we’ll install Chakra icons with `npm i @chakra-ui/icons`
+Then, we’ll install Chakra icons and the Green Sock Animation Project Node package with
+```
+npm i @chakra-ui/icons gsap
+```
 
-Now, we launch our IDE, then start our application with  `npm start`  
+Now, we launch our application with `npm start`.
 
 Notice that at the top right there is an icon to switch between light and dark modes. Pretty cool, but not the focus of today’s tutorial. I’ll go ahead and switch it because it looks pretty cool.
 
 Not much use adding a scroll button to a page without enough content to scroll, so we’re going to add some dummy content.
+
+Let's go to our IDE
 
 ## Making Boxes
 In the /src directory, create a folder named components.
